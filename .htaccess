@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Keep the public directory out of visible URLs.
+    RewriteCond %{THE_REQUEST} \\s/+public/ [NC]
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    # Serve Laravel public assets and route all requests through public/index.php.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
