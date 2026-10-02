@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -379,12 +379,24 @@
                         return data;
                     })
                     .then(data => {
-                        form.innerHTML = `
-                            <div style="background-color: #d4edda; color: #155724; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center;">
-                                <h3 style="margin-top:0; font-size: 20px;">Thank You!</h3>
-                                <p style="margin-bottom:0; font-size: 15px;">${data && data.message ? data.message : 'Your inquiry has been sent successfully.'}</p>
-                            </div>
+                        const successDiv = document.createElement('div');
+                        successDiv.id = 'home-form-success-msg';
+                        successDiv.style.cssText = 'background-color: #d4edda; color: #155724; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center; margin-bottom: 20px;';
+                        successDiv.innerHTML = `
+                            <h3 style="margin-top:0; font-size: 20px;">Thank You!</h3>
+                            <p style="margin-bottom:0; font-size: 15px;">${data && data.message ? data.message : 'Your inquiry has been sent successfully.'}</p>
                         `;
+                        
+                        form.style.display = 'none';
+                        form.parentNode.insertBefore(successDiv, form);
+
+                        setTimeout(() => {
+                            successDiv.remove();
+                            form.reset();
+                            form.style.display = 'block';
+                            submitBtn.innerText = originalBtnText;
+                            submitBtn.disabled = false;
+                        }, 5000);
                     })
                     .catch(error => {
                         console.error('Error:', error);

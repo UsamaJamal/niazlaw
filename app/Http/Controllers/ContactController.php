@@ -62,11 +62,7 @@ class ContactController extends Controller
         $contactEmail = config('services.contact_inquiries.recipient');
 
         try {
-            \Illuminate\Support\Facades\Mail::raw("Name: {$data['name']}\nEmail: {$data['email']}\nSubject: {$data['subject']}\n\nMessage:\n{$data['message']}", function ($message) use ($contactEmail, $data) {
-                $message->to($contactEmail)
-                        ->replyTo($data['email'], $data['name'])
-                        ->subject('Quick Inquiry: ' . ($data['subject'] ?? 'No Subject'));
-            });
+            \Illuminate\Support\Facades\Mail::to($contactEmail)->send(new \App\Mail\QuickInquiry($data));
         } catch (\Exception $e) {
             Log::error('Home Page quick-contact email failed.', [
                 'recipient' => $contactEmail,
