@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactSetting;
 use App\Models\Capability;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -32,6 +33,10 @@ class ContactController extends Controller
         try {
             \Illuminate\Support\Facades\Mail::to($contactEmail)->send(new \App\Mail\ContactInquiry($data));
         } catch (\Exception $e) {
+            Log::error('Contact Us form email failed.', [
+                'recipient' => $contactEmail,
+                'exception' => $e->getMessage(),
+            ]);
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['message' => 'Error sending email. Please check your SMTP settings in .env file.'], 500);
             }
@@ -63,6 +68,10 @@ class ContactController extends Controller
                         ->subject('Quick Inquiry: ' . ($data['subject'] ?? 'No Subject'));
             });
         } catch (\Exception $e) {
+            Log::error('Home Page quick-contact email failed.', [
+                'recipient' => $contactEmail,
+                'exception' => $e->getMessage(),
+            ]);
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['message' => 'Error sending email. Please check your SMTP settings in .env file.'], 500);
             }
