@@ -18,8 +18,8 @@ class ContactController extends Controller
     public function submit(\Illuminate\Http\Request $request)
     {
         $data = $request->validate([
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
+            'first_name' => ['required', 'string', 'max:50', 'regex:/^[\\pL\\s\'-]+$/u'],
+            'last_name' => ['required', 'string', 'max:50', 'regex:/^[\\pL\\s\'-]+$/u'],
             'email' => 'required|email',
             'phone' => 'required|string|max:20',
             'company' => 'nullable|string|max:100',
@@ -27,7 +27,7 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        $contactEmail = ContactSetting::first()->email ?? 'info@niazlawpc.com';
+        $contactEmail = config('services.contact_inquiries.recipient');
 
         try {
             \Illuminate\Support\Facades\Mail::to($contactEmail)->send(new \App\Mail\ContactInquiry($data));
@@ -48,17 +48,18 @@ class ContactController extends Controller
     public function quickSubmit(\Illuminate\Http\Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:100',
+            'name' => ['required', 'string', 'max:100', 'regex:/^[\\pL\\s\'-]+$/u'],
             'email' => 'required|email',
             'subject' => 'nullable|string|max:150',
             'message' => 'required|string',
         ]);
 
-        $contactEmail = ContactSetting::first()->email ?? 'info@niazlawpc.com';
+        $contactEmail = config('services.contact_inquiries.recipient');
 
         try {
             \Illuminate\Support\Facades\Mail::raw("Name: {$data['name']}\nEmail: {$data['email']}\nSubject: {$data['subject']}\n\nMessage:\n{$data['message']}", function ($message) use ($contactEmail, $data) {
                 $message->to($contactEmail)
+                        ->replyTo($data['email'], $data['name'])
                         ->subject('Quick Inquiry: ' . ($data['subject'] ?? 'No Subject'));
             });
         } catch (\Exception $e) {

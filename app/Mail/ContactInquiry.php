@@ -31,6 +31,7 @@ class ContactInquiry extends Mailable
     public function build()
     {
         return $this->subject('New Contact Inquiry from ' . $this->data['first_name'])
+                    ->replyTo($this->data['email'], trim($this->data['first_name'] . ' ' . $this->data['last_name']))
                     ->view('emails.contact-inquiry');
     }
 }

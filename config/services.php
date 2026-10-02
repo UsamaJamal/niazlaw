@@ -2,6 +2,10 @@
 
 return [
 
+    'contact_inquiries' => [
+        'recipient' => env('CONTACT_INQUIRY_RECIPIENT', 'faisal@niazlawpc.com'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

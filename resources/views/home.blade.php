@@ -306,7 +306,7 @@
                     <form id="home-contact-form" action="{{ route('contact.quick') }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Name" required>
+                            <input type="text" name="name" class="form-control" placeholder="Name" pattern="[A-Za-z][A-Za-z\s'-]*" minlength="2" maxlength="100" inputmode="text" data-name-input required>
                         </div>
                         <div class="form-group">
                             <input type="email" name="email" class="form-control" placeholder="Email" required>
@@ -343,6 +343,14 @@
             // Home Contact Form AJAX Submission
             const homeContactForm = document.getElementById('home-contact-form');
             if(homeContactForm) {
+                const nameInput = homeContactForm.querySelector('[data-name-input]');
+                nameInput.addEventListener('input', () => {
+                    nameInput.value = nameInput.value.replace(/[^A-Za-z\s'-]/g, '');
+                    nameInput.setCustomValidity('');
+                });
+                nameInput.addEventListener('invalid', () => {
+                    nameInput.setCustomValidity('Please enter a name using letters only.');
+                });
                 homeContactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
