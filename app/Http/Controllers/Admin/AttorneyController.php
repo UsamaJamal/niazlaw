@@ -7,6 +7,7 @@ use App\Models\Attorney;
 use App\Models\Capability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class AttorneyController extends Controller
@@ -90,6 +91,8 @@ class AttorneyController extends Controller
             'capabilities.*' => ['integer', 'exists:capabilities,id'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:40'],
+            'linkedin_url' => ['nullable', 'url', 'max:255'],
+            'profile_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
             'overview' => ['nullable', 'string', 'max:2000'],
             'experience' => ['nullable', 'string', 'max:4000'],
             'experience_points' => ['nullable', 'string', 'max:2000'],
@@ -113,6 +116,17 @@ class AttorneyController extends Controller
             $file = 'attorney-' . Str::uuid() . '.' . $photo->getClientOriginalExtension();
             $photo->move(public_path('images'), $file);
             $data['photo'] = $file;
+        }
+
+        if ($request->hasFile('profile_pdf')) {
+            $pdf = $request->file('profile_pdf');
+            $directory = public_path('uploads/attorney-pdfs');
+            File::ensureDirectoryExists($directory);
+            $pdfFile = 'attorney-profile-' . Str::uuid() . '.pdf';
+            $pdf->move($directory, $pdfFile);
+            $data['profile_pdf'] = 'uploads/attorney-pdfs/' . $pdfFile;
+        } else {
+            unset($data['profile_pdf']);
         }
 
         unset($data['photo']);

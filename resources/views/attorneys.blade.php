@@ -347,6 +347,17 @@
 
             searchInput.addEventListener('input', applyFilters);
             searchBtn.addEventListener('click', applyFilters);
+
+            // Links from an attorney profile can preselect its saved practice or industry.
+            const profileFilter = new URLSearchParams(window.location.search);
+            ['practice', 'industry'].forEach(filter => {
+                const value = profileFilter.get(filter);
+                if (!value) return;
+                selectedFilters[filter] = value.toLowerCase();
+                const dropdown = document.querySelector('.custom-dropdown[data-filter="' + filter + '"]');
+                if (dropdown) dropdown.querySelector('.dropdown-header span').textContent = value;
+            });
+            applyFilters();
         </script>
     </body>
 </html>

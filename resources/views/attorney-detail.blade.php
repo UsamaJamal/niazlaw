@@ -14,14 +14,23 @@
         .attorney-hero {
             position: relative;
             display: block;
-            height: 395px;
+            height: 411px;
             padding: 126px 0 0;
             box-sizing: border-box;
             color: #fff;
             background: linear-gradient(rgba(23, 29, 32, .52), rgba(23, 29, 32, .52)), url('{{ asset('images/Attorney-Page-new.webp') }}') center / cover;
         }
+        .attorney-hero::before {
+            display: none;
+            position: absolute;
+            z-index: 0;
+            inset: -8px;
+            content: '';
+            filter: blur(3px);
+        }
         .attorney-hero__container {
             position: relative;
+            z-index: 1;
             height: 100%;
         }
         .attorney-title {
@@ -99,8 +108,37 @@
         .attorney-meta-row {
             display: flex;
             flex-direction: column;
-            gap: 0;
+            align-items: flex-start;
+            gap: 12px;
         }
+        .attorney-profile__meta > .email { display: none; }
+        .attorney-meta-row .phone,
+        .attorney-meta-row .email--mobile,
+        .attorney-meta-row .location { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+        .email--mobile { display: inline-flex !important; }
+        .attorney-contact-actions {
+            display: flex;
+            width: max-content;
+            margin-top: 7px;
+            border: 1px solid rgba(255, 255, 255, .34);
+        }
+        .attorney-contact-actions a,
+        .attorney-contact-actions button {
+            display: inline-flex;
+            width: 37px;
+            height: 37px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-right: 1px solid rgba(255, 255, 255, .34);
+            background: rgba(0, 0, 0, .12);
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .attorney-contact-actions > :last-child { border-right: 0; }
+        .attorney-contact-actions a:hover,
+        .attorney-contact-actions button:hover { background: rgba(255, 255, 255, .16); text-decoration: none; }
         .attorney-overview {
             min-height: 201px;
             box-sizing: border-box;
@@ -109,6 +147,42 @@
         }
         .attorney-overview__inner {
             padding-left: 267px;
+        }
+        .attorney-experience-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 270px;
+            gap: 54px;
+            align-items: start;
+        }
+        .attorney-practice-sidebar {
+            padding: 3px 0 3px 25px;
+            border-left: 1px solid #cfcfcf;
+        }
+        .attorney-practice-sidebar h3 {
+            margin: 0 0 13px;
+            color: #080808;
+            font: 700 20px / 1.2 Georgia, serif;
+        }
+        .attorney-practice-sidebar h4 {
+            margin: 0 0 9px;
+            color: #252525;
+            font: 700 16px / 1.35 Georgia, serif;
+        }
+        .industry-practice-group + .industry-practice-group { margin-top: 23px; }
+        .attorney-practice-sidebar ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .attorney-practice-sidebar li {
+            margin: 0 0 9px;
+            padding-left: 2px;
+            color: #252525;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .attorney-practice-sidebar a {
+            color: inherit;
+            text-decoration: none;
         }
         .attorney-overview h2,
         .attorney-section h2 {
@@ -210,28 +284,36 @@
             .attorney-profile { top: 95px; left: var(--space-32, 32px); }
             .attorney-profile img { width: 190px; height: 205px; }
             .attorney-overview__inner { padding-left: 215px; }
+            .attorney-experience-layout { grid-template-columns: minmax(0, 1fr) 230px; gap: 32px; }
             .attorney-insights__grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             .attorney-profile { left: 25px; }
         }
         @media (max-width: 650px) {
-            .attorney-hero { height: 500px; padding: 169px 24px 0; display: flex; flex-direction: column; align-items: center; }
-            .attorney-title { width: 100%; justify-content: center; }
+            .attorney-hero { height: auto; min-height: 0; padding: 112px 24px 32px; overflow: hidden; }
+            .attorney-hero::before { display: block; background: linear-gradient(rgba(6, 12, 22, .42), rgba(6, 12, 22, .48)), url('{{ asset('images/attorney-hero-mobile-v3.png') }}') center / cover; }
+            .attorney-hero__container { height: auto; }
+            .attorney-title { display: none; }
             .attorney-title h1 { font-size: 28px; line-height: 33px; text-align: center; }
             .attorney-title .attorney-title-line, .attorney-title .share-icon { display: none; }
-            .attorney-profile { position: relative; top: auto; left: auto; margin: 20px 0 -100px; gap: 24px; flex-direction: column-reverse; align-items: center; }
-            .attorney-profile img { width: 240px; height: 200px; }
+            .attorney-profile { position: relative; top: auto; left: auto; margin: 0; gap: 18px; flex-direction: column; align-items: center; }
+            .attorney-profile img { width: 240px; height: 200px; border: 2px solid rgba(255, 255, 255, .55); border-radius: 12px; }
             .attorney-profile__meta { padding-top: 0; min-width: 0; color: #fff; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .attorney-profile__meta::before { content: attr(data-attorney-name); margin-bottom: 12px; color: #fff; font: 700 28px / 1.1 Georgia, serif; }
             .attorney-profile__meta h3 { color: #fff; font-size: 19px; line-height: 21px; margin-bottom: 10px; font-weight:500; font-family: Georgia, serif; text-align: center; }
             .attorney-profile__meta p { color: #fff; font-size: 14px; line-height: 20px; margin-bottom: 0; justify-content: center; }
             .attorney-profile__meta .email { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
-            .attorney-meta-row { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; width: 100%; max-width: 100%; box-sizing: border-box; }
-            .attorney-profile__meta .phone, .attorney-profile__meta .location { display: inline-flex; align-items: center; justify-content: center; gap: 4px; margin: 0; white-space: nowrap; font-size: clamp(11px, 3.1vw, 13.5px); }
+            .attorney-meta-row { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 100%; box-sizing: border-box; }
+            .attorney-profile__meta .phone, .attorney-profile__meta .email--mobile, .attorney-profile__meta .location { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin: 0; white-space: nowrap; font-size: 13px; }
+            .attorney-profile__meta > .email { display: none; }
+            .attorney-profile__meta .email--mobile { display: inline-flex !important; }
             .attorney-profile__meta .phone svg, .attorney-profile__meta .location svg { width: 14px; height: 14px; flex-shrink: 0; }
-            .attorney-overview { min-height: auto; padding: 62px 0 32px; }
+            .attorney-overview { min-height: auto; padding: 32px 0; }
             .attorney-overview .container { padding: 0 16px; }
             .attorney-overview__inner { padding-left: 0; text-align: justify; }
+            .attorney-experience-layout { grid-template-columns: 1fr; gap: 30px; }
+            .attorney-practice-sidebar { padding: 24px 0 0; border-top: 1px solid #cfcfcf; border-left: 0; }
             .attorney-content { padding-top: 27px; padding-bottom: 0px; text-align: justify;}
             .attorney-credentials > h2 { display: block; }
             .attorney-credentials > h2::after { display: block; width: 65px; margin-top: 12px; margin-left: 0; }
@@ -249,6 +331,7 @@
         $experiencePoints = preg_split('/\r\n|\r|\n/', $attorney->experience_points ?: '');
         $educationItems = preg_split('/\r\n|\r|\n/', $attorney->education ?: '');
         $admissionItems = preg_split('/\r\n|\r|\n/', $attorney->admissions ?: '');
+        $capabilityItems = $attorney->capabilities->sortBy(fn ($capability) => strtolower($capability->title));
     @endphp
 
     <main>
@@ -265,7 +348,7 @@
             </div>
             <div class="attorney-profile">
                 <img src="{{ asset('images/' . ($attorney->photo ?: 'lawyer_profile.jpg')) }}" alt="{{ $attorney->name }}">
-                <div class="attorney-profile__meta">
+                <div class="attorney-profile__meta" data-attorney-name="{{ $attorney->name }}">
                     <h3>{{ $attorney->title }}</h3>
                     @if($attorney->email)
                         <p class="email">
@@ -280,11 +363,32 @@
                                 <a href="tel:{{ preg_replace('/[^0-9+]/', '', $attorney->phone) }}">{{ $attorney->phone }}</a>
                             </p>
                         @endif
+                        @if($attorney->email)
+                            <p class="email email--mobile">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                <a href="mailto:{{ $attorney->email }}">{{ $attorney->email }}</a>
+                            </p>
+                        @endif
                         @if($attorney->location)
                             <p class="location">
                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <a href="https://www.google.com/maps/search/?api=1&amp;query={{ urlencode($attorney->location) }}" target="_blank" rel="noopener noreferrer">{{ $attorney->location }}</a>
                             </p>
+                        @endif
+                    </div>
+                    <div class="attorney-contact-actions" aria-label="Attorney profile actions">
+                        @if($attorney->linkedin_url)
+                        <a href="{{ $attorney->linkedin_url }}" target="_blank" rel="noopener noreferrer" title="Open {{ $attorney->name }}'s LinkedIn profile" aria-label="Open {{ $attorney->name }}'s LinkedIn profile">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M5.1 3.5A2.1 2.1 0 1 1 1 3.5a2.1 2.1 0 0 1 4.1 0zM1.4 8h3.5v11H1.4V8zm5.7 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V19h-3.5v-4.9c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V19H8.1V8z"/></svg>
+                        </a>
+                        @endif
+                        <a href="{{ route('attorneys.vcard', $attorney) }}" title="Download contact card (.vcf)" aria-label="Download {{ $attorney->name }} contact card">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+                        </a>
+                        @if($attorney->profile_pdf)
+                        <a href="{{ asset($attorney->profile_pdf) }}" target="_blank" rel="noopener noreferrer" title="Open uploaded profile PDF" aria-label="Open {{ $attorney->name }} profile PDF">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l3 3v17H6z"/><path d="M15 2v4h4M8 16h8M8 12h8"/></svg>
+                        </a>
                         @endif
                     </div>
                 </div>
@@ -303,15 +407,25 @@
 
         <div class="container attorney-content">
             <section class="attorney-section">
-                <h2>Experience</h2>
-                <p>{{ $attorney->experience ?: 'Professional experience will be available soon.' }}</p>
-                @if($attorney->experience_points)
-                    <ul>
-                        @foreach($experiencePoints as $point)
-                            @if(trim($point))<li>{{ $point }}</li>@endif
-                        @endforeach
-                    </ul>
-                @endif
+                <div class="attorney-experience-layout">
+                    <div>
+                        <h2>Experience</h2>
+                        <p>{{ $attorney->experience ?: 'Professional experience will be available soon.' }}</p>
+                        @if($attorney->experience_points)
+                            <ul>
+                                @foreach($experiencePoints as $point)
+                                    @if(trim($point))<li>{{ $point }}</li>@endif
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                    @if($capabilityItems->isNotEmpty())
+                    <aside class="attorney-practice-sidebar" aria-label="Capabilities">
+                        <h3>Capabilities</h3>
+                        <ul>@foreach($capabilityItems as $capability)<li><a href="{{ route('capabilities.show', ['capability' => $capability->slug ?: $capability->id]) }}">{{ $capability->title }}</a></li>@endforeach</ul>
+                    </aside>
+                    @endif
+                </div>
             </section>
 
             <section class="attorney-section attorney-credentials">
@@ -351,7 +465,6 @@
             </section>
         </div>
     </main>
-
     @include('components.footer')
 </body>
 </html>

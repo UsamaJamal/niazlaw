@@ -37,7 +37,9 @@ use App\Http\Controllers\Admin\SeoSettingController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/attorneys', [AttorneysController::class, 'index']);
+Route::get('/attorneys', [AttorneysController::class, 'index'])->name('attorneys');
+Route::get('/attorneys/{attorney:slug}/contact.vcf', [AttorneyDetailController::class, 'vcard'])->name('attorneys.vcard');
+Route::get('/attorneys/{attorney:slug}/profile.pdf', [AttorneyDetailController::class, 'pdf'])->name('attorneys.pdf');
 Route::get('/attorneys/{attorney:slug}', [AttorneyDetailController::class, 'show'])->name('attorneys.detail');
 Route::get('/capabilities', [CapabilitiesController::class, 'index'])->name('capabilities');
 Route::get('/capabilities/{capability}', [CapabilitiesController::class, 'show'])->name('capabilities.show');

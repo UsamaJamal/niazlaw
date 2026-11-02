@@ -365,7 +365,7 @@ ul {
 
 @media (max-width: 768px) {
     .navbar {
-        margin-top: 13px;
+        margin-top: 0;
         height: 80px;
         padding: 0 var(--space-16);
         background: transparent;
