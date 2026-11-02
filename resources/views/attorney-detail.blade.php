@@ -53,9 +53,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            border: 0;
+            background: transparent;
             color: #fff;
+            cursor: pointer;
             text-decoration: none;
         }
+        .attorney-title .share-icon:hover { opacity: .78; }
         .attorney-profile {
             position: absolute;
             z-index: 2;
@@ -219,6 +224,8 @@
             letter-spacing: .01em;
         }
         .attorney-section p { margin: 0; }
+        .attorney-experience-copy > *:first-child { margin-top: 0; }
+        .attorney-experience-copy > *:last-child { margin-bottom: 0; }
         .attorney-section ul {
             margin: 18px 0 0 17px;
             padding-left: 0px;
@@ -328,7 +335,6 @@
     @include('components.header')
 
     @php
-        $experiencePoints = preg_split('/\r\n|\r|\n/', $attorney->experience_points ?: '');
         $educationItems = preg_split('/\r\n|\r|\n/', $attorney->education ?: '');
         $admissionItems = preg_split('/\r\n|\r|\n/', $attorney->admissions ?: '');
         $capabilityItems = $attorney->capabilities->sortBy(fn ($capability) => strtolower($capability->title));
@@ -340,11 +346,11 @@
                 <div class="attorney-title">
                 <h1>{{ $attorney->name }}</h1>
                 <div class="attorney-title-line"></div>
-                <a href="#" class="share-icon" title="Share">
+                <button type="button" class="share-icon" title="Share this attorney profile" aria-label="Share {{ $attorney->name }}'s profile" data-share-title="{{ $attorney->name }}" data-share-url="{{ url()->current() }}">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                         <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/>
                     </svg>
-                </a>
+                </button>
             </div>
             <div class="attorney-profile">
                 <img src="{{ asset('images/' . ($attorney->photo ?: 'lawyer_profile.jpg')) }}" alt="{{ $attorney->name }}">
@@ -387,7 +393,7 @@
                         </a>
                         @if($attorney->profile_pdf)
                         <a href="{{ asset($attorney->profile_pdf) }}" target="_blank" rel="noopener noreferrer" title="Open uploaded profile PDF" aria-label="Open {{ $attorney->name }} profile PDF">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l3 3v17H6z"/><path d="M15 2v4h4M8 16h8M8 12h8"/></svg>
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M5 2.5h9l5 5v14H5z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M14 2.5v5h5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M7.2 18.2c2.7-1 5-3.8 6.2-8.9 1.2 4.5 2.6 7.1 4.2 8.9-2.5-1.1-4.8-1.3-6.9-.7-1.2.3-2.4.7-3.5.7Z" stroke="#fff" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 16.9c2.2.1 4.4.5 6.5 1.3" stroke="#fff" stroke-width="1.45" stroke-linecap="round"/></svg>
                         </a>
                         @endif
                     </div>
@@ -410,14 +416,7 @@
                 <div class="attorney-experience-layout">
                     <div>
                         <h2>Experience</h2>
-                        <p>{{ $attorney->experience ?: 'Professional experience will be available soon.' }}</p>
-                        @if($attorney->experience_points)
-                            <ul>
-                                @foreach($experiencePoints as $point)
-                                    @if(trim($point))<li>{{ $point }}</li>@endif
-                                @endforeach
-                            </ul>
-                        @endif
+                        <div class="attorney-experience-copy">{!! $attorney->experience ?: 'Professional experience will be available soon.' !!}</div>
                     </div>
                     @if($capabilityItems->isNotEmpty())
                     <aside class="attorney-practice-sidebar" aria-label="Capabilities">
@@ -466,5 +465,44 @@
         </div>
     </main>
     @include('components.footer')
+    <script>
+        document.querySelectorAll('.share-icon[data-share-url]').forEach(function (button) {
+            button.addEventListener('click', async function () {
+                const shareData = {
+                    title: button.dataset.shareTitle + ' | Niaz Law P.C.',
+                    text: 'View ' + button.dataset.shareTitle + "'s attorney profile at Niaz Law P.C.",
+                    url: button.dataset.shareUrl
+                };
+
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                        return;
+                    } catch (error) {
+                        if (error.name === 'AbortError') return;
+                    }
+                }
+
+                try {
+                    await navigator.clipboard.writeText(shareData.url);
+                } catch (error) {
+                    const input = document.createElement('input');
+                    input.value = shareData.url;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand('copy');
+                    input.remove();
+                }
+
+                const originalTitle = button.title;
+                button.title = 'Profile link copied';
+                button.setAttribute('aria-label', 'Profile link copied');
+                window.setTimeout(function () {
+                    button.title = originalTitle;
+                    button.setAttribute('aria-label', 'Share ' + button.dataset.shareTitle + "'s profile");
+                }, 1800);
+            });
+        });
+    </script>
 </body>
 </html>

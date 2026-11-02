@@ -95,7 +95,6 @@ class AttorneyController extends Controller
             'profile_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
             'overview' => ['nullable', 'string', 'max:2000'],
             'experience' => ['nullable', 'string', 'max:4000'],
-            'experience_points' => ['nullable', 'string', 'max:2000'],
             'education' => ['nullable', 'string', 'max:2000'],
             'admissions' => ['nullable', 'string', 'max:2000'],
             'meta_title' => ['nullable', 'string', 'max:255'],
@@ -110,6 +109,7 @@ class AttorneyController extends Controller
         $data['industry'] = implode(', ', $data['industry']);
         unset($data['practice_custom'], $data['industry_custom']);
         $data['location'] = implode(', ', $data['location']);
+        $data['experience_points'] = null;
 
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
@@ -122,7 +122,7 @@ class AttorneyController extends Controller
             $pdf = $request->file('profile_pdf');
             $directory = public_path('uploads/attorney-pdfs');
             File::ensureDirectoryExists($directory);
-            $pdfFile = 'attorney-profile-' . Str::uuid() . '.pdf';
+            $pdfFile = Str::slug($data['name']) . '-profile.pdf';
             $pdf->move($directory, $pdfFile);
             $data['profile_pdf'] = 'uploads/attorney-pdfs/' . $pdfFile;
         } else {
