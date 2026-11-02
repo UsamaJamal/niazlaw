@@ -2914,3 +2914,8 @@ textarea {
         width: 100%;
     }
 }
+
+/* Keep visitor-facing paragraph copy consistent across the public website. */
+body:has(.navbar) p {
+    font-size: 16px !important;
+}
