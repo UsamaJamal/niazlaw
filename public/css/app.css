@@ -1808,6 +1808,14 @@ textarea {
     font-weight: 500;
 }
 
+.lawyer-info .designation {
+    margin: 0 0 5px;
+    color: #1d1d1d;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
 .lawyer-info .location,
 .lawyer-info .email,
 .lawyer-info .phone {
@@ -2917,5 +2925,11 @@ textarea {
 
 /* Keep visitor-facing paragraph copy consistent across the public website. */
 body:has(.navbar) p {
+    font-size: 16px !important;
+}
+
+/* Rich text saved through the admin editor may contain nested spans with an
+   inline size. Keep every public paragraph and its contents at 16px. */
+body:has(.navbar) p * {
     font-size: 16px !important;
 }

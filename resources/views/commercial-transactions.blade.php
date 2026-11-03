@@ -184,13 +184,16 @@
             text-align: left;
             border-radius: 4px;
             overflow: hidden;
+            width: 100%;
+            max-width: 370px;
+            margin: 0 auto;
+            cursor: pointer;
         }
         .ct-lawyer-card img {
             width: 100%;
             height: auto;
-            aspect-ratio: 397 / 230;
-            object-fit: cover;
-            object-position: top center;
+            aspect-ratio: auto;
+            object-fit: contain;
             margin-bottom: 0;
             display: block;
         }
@@ -203,10 +206,13 @@
             font-family: var(--font-heading);
             color: #000;
         }
+        .ct-lawyer-designation { margin: 0 0 3px; color: #1d1d1d; font: 700 14px/1.18 Arial, sans-serif; }
+        .ct-lawyer-title { margin: 0 0 7px; color: #5c5140; font: 600 15px/1.18 Georgia, serif; }
         .ct-lawyer-card p {
             color: #333;
             font-size: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
+            line-height: 1.2;
             font-family: 'Inter', sans-serif;
         }
         .ct-lawyer-links {
@@ -575,7 +581,7 @@
         <!-- Lawyers -->
         <h2 class="ct-section-title" style="margin-top: 20px; margin-bottom: 20px;">Lawyers in Commercial Transactions</h2>
         <div class="ct-lawyers">
-            @if(isset($capability)) @foreach($capability->attorneys as $attorney)<div class="ct-lawyer-card"><img src="{{ asset('images/'.($attorney->photo ?: 'lawyer_profile.jpg')) }}" alt="{{ $attorney->name }}"><div class="ct-lawyer-info"><h3>{{ $attorney->name }}</h3><p>{{ $attorney->location }}</p><div class="ct-lawyer-links"><a href="mailto:{{ $attorney->email }}">{{ $attorney->email }}</a><a href="tel:{{ $attorney->phone }}">{{ $attorney->phone }}</a></div></div></div>@endforeach @else
+            @if(isset($capability)) @foreach($capability->attorneys as $attorney)<div class="ct-lawyer-card" role="link" tabindex="0" onclick="window.location.href='{{ route('attorneys.detail', $attorney->slug) }}'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"><img src="{{ asset('images/'.($attorney->photo ?: 'lawyer_profile.jpg')) }}" alt="{{ $attorney->name }}"><div class="ct-lawyer-info"><h3>{{ $attorney->name }}</h3>@if($attorney->designation)<p class="ct-lawyer-designation">{{ $attorney->designation }}</p>@endif @if($attorney->title)<p class="ct-lawyer-title">{{ $attorney->title }}</p>@endif <p>{{ $attorney->location }}</p><div class="ct-lawyer-links"><a href="mailto:{{ $attorney->email }}" onclick="event.stopPropagation()">{{ $attorney->email }}</a><a href="tel:{{ $attorney->phone }}" onclick="event.stopPropagation()">{{ $attorney->phone }}</a></div></div></div>@endforeach @else
             <!-- Lawyer 1 -->
             <div class="ct-lawyer-card">
                 <img src="{{ asset('images/lawyer_profile.jpg') }}" onerror="this.src='https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=397&h=230&crop=faces'" alt="Faisal Syed Niaz">

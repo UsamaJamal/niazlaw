@@ -229,6 +229,7 @@
                         </div>
                         <div class="lawyer-info">
                             <h3>{{ $attorney->name }}</h3>
+                            @if($attorney->designation)<p class="designation">{{ $attorney->designation }}</p>@endif
                             <p class="title">{{ $attorney->title }}</p>
                             <p class="location">{{ $attorney->location }}</p>
                             <p class="email">{{ $attorney->email }}</p>

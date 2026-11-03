@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attorney;
 use App\Models\Capability;
+use App\Models\AttorneyTaxonomy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
@@ -14,7 +15,7 @@ class AttorneyController extends Controller
 {
     public function create()
     {
-        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get()]);
+        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name')]);
     }
 
     public function details()
@@ -36,6 +37,7 @@ class AttorneyController extends Controller
             'location' => ['required', 'array', 'min:1'],
             'location.*' => ['string', 'max:120'],
             'title' => ['required', 'string', 'max:120'],
+            'designation' => ['nullable', 'string', 'max:255'],
             'capabilities' => ['nullable', 'array'],
             'capabilities.*' => ['integer', 'exists:capabilities,id'],
             'meta_title' => ['nullable', 'string', 'max:255'],
@@ -69,7 +71,7 @@ class AttorneyController extends Controller
 
     public function edit(Attorney $attorney)
     {
-        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get()]);
+        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name')]);
     }
 
     public function update(Request $request, Attorney $attorney)
@@ -87,16 +89,17 @@ class AttorneyController extends Controller
             'location' => ['required', 'array', 'min:1'],
             'location.*' => ['string', 'max:120'],
             'title' => ['required', 'string', 'max:120'],
+            'designation' => ['nullable', 'string', 'max:255'],
             'capabilities' => ['nullable', 'array'],
             'capabilities.*' => ['integer', 'exists:capabilities,id'],
-            'email' => ['required', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'max:40'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:40'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'profile_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
-            'overview' => ['nullable', 'string', 'max:2000'],
-            'experience' => ['nullable', 'string', 'max:4000'],
-            'education' => ['nullable', 'string', 'max:2000'],
-            'admissions' => ['nullable', 'string', 'max:2000'],
+            'profile_pdf' => ['nullable', 'file', 'mimes:pdf'],
+            'overview' => ['nullable', 'string'],
+            'experience' => ['nullable', 'string'],
+            'education' => ['nullable', 'string'],
+            'admissions' => ['nullable', 'string'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string'],
             'meta_keywords' => ['nullable', 'string'],

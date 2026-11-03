@@ -606,6 +606,14 @@
             color: #111111;
             margin: 0 0 10px 0;
         }
+        .about-people-info .designation {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            color: #111111;
+            margin: 0 0 4px;
+            line-height: 1.3;
+        }
 
         .about-people-details {
             font-family: var(--font-body);
@@ -840,6 +848,7 @@
                     <img src="{{ $attorney->photo ? asset(strpos($attorney->photo, '/') !== false ? $attorney->photo : 'images/'.$attorney->photo) : asset('images/aboutus-last-img.jpg') }}" alt="{{ $attorney->name }}">
                     <div class="about-people-info">
                         <h3>{{ $attorney->name }}</h3>
+                        @if($attorney->designation)<p class="designation">{{ $attorney->designation }}</p>@endif
                         <p class="role">{{ $attorney->title ?: ($attorney->practice ?: 'Attorney') }}</p>
                         <div class="about-people-details">
                             <p class="location">{{ $attorney->location ?: 'Illinois' }}</p>

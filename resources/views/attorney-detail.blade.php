@@ -14,11 +14,11 @@
         .attorney-hero {
             position: relative;
             display: block;
-            height: 411px;
+            height: 410px;
             padding: 126px 0 0;
             box-sizing: border-box;
             color: #fff;
-            background: linear-gradient(rgba(23, 29, 32, .52), rgba(23, 29, 32, .52)), url('{{ asset('images/Attorney-Page-new.webp') }}') center / cover;
+            background: linear-gradient(rgba(23, 29, 32, .72), rgba(23, 29, 32, .72)), url('{{ asset('images/Attorney-Page-new.webp') }}') center / cover;
         }
         .attorney-hero::before {
             display: none;
@@ -64,7 +64,7 @@
         .attorney-profile {
             position: absolute;
             z-index: 2;
-            top: 104px;
+            top: 82px;
             left: var(--space-100, 100px);
             display: flex;
             align-items: flex-start;
@@ -72,26 +72,36 @@
         }
         .attorney-profile img {
             display: block;
-            width: 242px;
-            height: 242px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             object-position: center top;
         }
         .attorney-profile__meta {
             min-width: 230px;
-            padding-top: 8px;
+            padding-top: 2px;
             color: #fff;
         }
-        .attorney-profile__meta h3 {
-            margin: 0 0 12px;
+        .attorney-profile__name {
+            margin: 0 0 5px;
             color: #fff;
-            font: 700 25px / 1.1 Georgia, serif;
+            font: 700 26px / 1.1 Georgia, serif;
+        }
+        .attorney-profile__meta h3 {
+            margin: 0 0 7px;
+            color: #fff;
+            font: 550 18px / 1.1 Georgia, serif;
+        }
+        .attorney-profile__designation {
+            margin: 0 0 5px;
+            color: #fff;
+            font: 700 21px/1.3 Arial, sans-serif;
         }
         .attorney-profile__meta p {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 0 0 12px;
+            margin: 0 0 8px;
             color: #fff;
             font-size: 14px;
             line-height: 1.15;
@@ -114,7 +124,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 12px;
+            gap: 8px;
         }
         .attorney-profile__meta > .email { display: none; }
         .attorney-meta-row .phone,
@@ -124,14 +134,14 @@
         .attorney-contact-actions {
             display: flex;
             width: max-content;
-            margin-top: 7px;
+            margin-top: 12px;
             border: 1px solid rgba(255, 255, 255, .34);
         }
         .attorney-contact-actions a,
         .attorney-contact-actions button {
             display: inline-flex;
-            width: 37px;
-            height: 37px;
+            width: 30px;
+            height: 30px;
             align-items: center;
             justify-content: center;
             border: 0;
@@ -142,6 +152,7 @@
             text-decoration: none;
         }
         .attorney-contact-actions > :last-child { border-right: 0; }
+        .attorney-contact-actions svg { width: 16px; height: 16px; }
         .attorney-contact-actions a:hover,
         .attorney-contact-actions button:hover { background: rgba(255, 255, 255, .16); text-decoration: none; }
         .attorney-overview {
@@ -226,6 +237,15 @@
         .attorney-section p { margin: 0; }
         .attorney-experience-copy > *:first-child { margin-top: 0; }
         .attorney-experience-copy > *:last-child { margin-bottom: 0; }
+        .attorney-experience-copy p { margin: 0 0 20px; }
+        .attorney-experience-copy h1,
+        .attorney-experience-copy h2,
+        .attorney-experience-copy h3,
+        .attorney-experience-copy h4,
+        .attorney-experience-copy h5,
+        .attorney-experience-copy h6 { margin: 32px 0 16px; }
+        .attorney-experience-copy ul,
+        .attorney-experience-copy ol { margin: 0 0 22px 17px; }
         .attorney-section ul {
             margin: 18px 0 0 17px;
             padding-left: 0px;
@@ -287,8 +307,8 @@
             font-size: 13px;
         }
         @media (max-width: 1024px) {
-            .attorney-hero { height: 365px; padding-top: 120px; }
-            .attorney-profile { top: 95px; left: var(--space-32, 32px); }
+            .attorney-hero { height: 500px; padding-top: 120px; }
+            .attorney-profile { top: 55px; left: var(--space-32, 32px); }
             .attorney-profile img { width: 190px; height: 205px; }
             .attorney-overview__inner { padding-left: 215px; }
             .attorney-experience-layout { grid-template-columns: minmax(0, 1fr) 230px; gap: 32px; }
@@ -307,7 +327,7 @@
             .attorney-profile { position: relative; top: auto; left: auto; margin: 0; gap: 18px; flex-direction: column; align-items: center; }
             .attorney-profile img { width: 240px; height: 200px; border: 2px solid rgba(255, 255, 255, .55); border-radius: 12px; }
             .attorney-profile__meta { padding-top: 0; min-width: 0; color: #fff; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
-            .attorney-profile__meta::before { content: attr(data-attorney-name); margin-bottom: 12px; color: #fff; font: 700 28px / 1.1 Georgia, serif; }
+            .attorney-profile__name { margin-bottom: 12px; font-size: 28px; }
             .attorney-profile__meta h3 { color: #fff; font-size: 19px; line-height: 21px; margin-bottom: 10px; font-weight:500; font-family: Georgia, serif; text-align: center; }
             .attorney-profile__meta p { color: #fff; font-size: 14px; line-height: 20px; margin-bottom: 0; justify-content: center; }
             .attorney-profile__meta .email { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
@@ -355,6 +375,9 @@
             <div class="attorney-profile">
                 <img src="{{ asset('images/' . ($attorney->photo ?: 'lawyer_profile.jpg')) }}" alt="{{ $attorney->name }}">
                 <div class="attorney-profile__meta" data-attorney-name="{{ $attorney->name }}">
+                    @if($attorney->designation)
+                        <p class="attorney-profile__designation">{{ $attorney->designation }}</p>
+                    @endif
                     <h3>{{ $attorney->title }}</h3>
                     @if($attorney->email)
                         <p class="email">

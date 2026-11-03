@@ -34,6 +34,7 @@ use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use App\Http\Controllers\Admin\SeoSettingController;
+use App\Http\Controllers\Admin\AttorneyTitleController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
@@ -91,6 +92,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/static-pages/{page}/edit', [AdminStaticPageController::class, 'edit'])->name('static-pages.edit');
         Route::put('/static-pages/{page}', [AdminStaticPageController::class, 'update'])->name('static-pages.update');
         Route::get('/attorneys/create', [AttorneyController::class, 'create'])->name('attorneys.create');
+        Route::get('/attorney-titles', [AttorneyTitleController::class, 'index'])->name('attorney-titles.index');
+        Route::post('/attorney-titles', [AttorneyTitleController::class, 'store'])->name('attorney-titles.store');
+        Route::delete('/attorney-titles/{title}', [AttorneyTitleController::class, 'destroy'])->name('attorney-titles.destroy');
         Route::get('/attorney-page', [AttorneyController::class, 'details'])->name('attorneys.details');
         Route::post('/attorneys', [AttorneyController::class, 'store'])->name('attorneys.store');
         Route::get('/attorneys/{attorney}/edit', [AttorneyController::class, 'edit'])->name('attorneys.edit');
