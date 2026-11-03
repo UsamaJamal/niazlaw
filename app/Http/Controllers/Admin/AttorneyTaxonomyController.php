@@ -10,7 +10,6 @@ class AttorneyTaxonomyController extends Controller
 {
     public function index()
     {
-        $this->seedDefaults();
         return view('admin.attorney-taxonomies', [
             'practices' => AttorneyTaxonomy::where('type', 'practice')->orderBy('name')->get(),
             'industries' => AttorneyTaxonomy::where('type', 'industry')->orderBy('name')->get(),
@@ -38,12 +37,4 @@ class AttorneyTaxonomyController extends Controller
         return back()->with('success', 'Option deleted.');
     }
 
-    private function seedDefaults(): void
-    {
-        $defaults = [
-            'practice' => ['Commercial Transactions','Infrastructure & Projects','Procurement & Contracting','Aviation','Commercial Risk','International Business','Corporate Transactions & Governance','Commercial Operations & Strategic Sourcing','Infrastructure & Construction','Aviation & Transportation','Real Estate Transactions'],
-            'industry' => ['Aviation','Energy & Infrastructure','Technology','Healthcare & Life Sciences','Real Estate & Construction'],
-        ];
-        foreach ($defaults as $type => $names) foreach ($names as $name) AttorneyTaxonomy::firstOrCreate(['type' => $type, 'name' => $name]);
-    }
 }
