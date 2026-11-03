@@ -15,6 +15,7 @@ class AttorneyController extends Controller
 {
     public function create()
     {
+        $this->syncExistingAttorneyOptions();
         return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
     }
 
@@ -73,6 +74,8 @@ class AttorneyController extends Controller
 
     public function edit(Attorney $attorney)
     {
+        $this->saveOptions('practice', preg_split('/\\s*,\\s*/', $attorney->practice));
+        $this->saveOptions('industry', preg_split('/\\s*,\\s*/', $attorney->industry));
         return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
     }
 
@@ -162,5 +165,13 @@ class AttorneyController extends Controller
         foreach (array_unique(array_filter(array_map('trim', $names))) as $name) {
             AttorneyTaxonomy::firstOrCreate(['type' => $type, 'name' => $name]);
         }
+    }
+
+    private function syncExistingAttorneyOptions(): void
+    {
+        Attorney::select(['practice', 'industry'])->each(function (Attorney $attorney) {
+            $this->saveOptions('practice', preg_split('/\\s*,\\s*/', $attorney->practice));
+            $this->saveOptions('industry', preg_split('/\\s*,\\s*/', $attorney->industry));
+        });
     }
 }
