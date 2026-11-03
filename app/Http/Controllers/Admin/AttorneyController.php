@@ -16,7 +16,7 @@ class AttorneyController extends Controller
     public function create()
     {
         $this->syncExistingAttorneyOptions();
-        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
+        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'locationOptions' => $this->options('location'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name'), 'locationOptionIds' => AttorneyTaxonomy::where('type', 'location')->pluck('id', 'name')]);
     }
 
     public function details()
@@ -37,6 +37,7 @@ class AttorneyController extends Controller
             'industry_custom' => ['nullable', 'string', 'max:120'],
             'location' => ['required', 'array', 'min:1'],
             'location.*' => ['string', 'max:120'],
+            'location_custom' => ['nullable', 'string', 'max:120'],
             'title' => ['required', 'string', 'max:120'],
             'designation' => ['nullable', 'string', 'max:255'],
             'capabilities' => ['nullable', 'array'],
@@ -49,11 +50,13 @@ class AttorneyController extends Controller
 
         if (!empty($data['practice_custom'])) $data['practice'][] = $data['practice_custom'];
         if (!empty($data['industry_custom'])) $data['industry'][] = $data['industry_custom'];
+        if (!empty($data['location_custom'])) $data['location'][] = $data['location_custom'];
         $this->saveOptions('practice', $data['practice']);
         $this->saveOptions('industry', $data['industry']);
+        $this->saveOptions('location', $data['location']);
         $data['practice'] = implode(', ', $data['practice']);
         $data['industry'] = implode(', ', $data['industry']);
-        unset($data['practice_custom'], $data['industry_custom']);
+        unset($data['practice_custom'], $data['industry_custom'], $data['location_custom']);
         $data['location'] = implode(', ', $data['location']);
         $data['email'] = '';
         $data['phone'] = '';
@@ -76,7 +79,8 @@ class AttorneyController extends Controller
     {
         $this->saveOptions('practice', preg_split('/\\s*,\\s*/', $attorney->practice));
         $this->saveOptions('industry', preg_split('/\\s*,\\s*/', $attorney->industry));
-        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
+        $this->saveOptions('location', preg_split('/\\s*,\\s*/', $attorney->location));
+        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'locationOptions' => $this->options('location'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name'), 'locationOptionIds' => AttorneyTaxonomy::where('type', 'location')->pluck('id', 'name')]);
     }
 
     public function update(Request $request, Attorney $attorney)
@@ -93,6 +97,7 @@ class AttorneyController extends Controller
             'industry_custom' => ['nullable', 'string', 'max:120'],
             'location' => ['required', 'array', 'min:1'],
             'location.*' => ['string', 'max:120'],
+            'location_custom' => ['nullable', 'string', 'max:120'],
             'title' => ['required', 'string', 'max:120'],
             'designation' => ['nullable', 'string', 'max:255'],
             'capabilities' => ['nullable', 'array'],
@@ -113,11 +118,13 @@ class AttorneyController extends Controller
 
         if (!empty($data['practice_custom'])) $data['practice'][] = $data['practice_custom'];
         if (!empty($data['industry_custom'])) $data['industry'][] = $data['industry_custom'];
+        if (!empty($data['location_custom'])) $data['location'][] = $data['location_custom'];
         $this->saveOptions('practice', $data['practice']);
         $this->saveOptions('industry', $data['industry']);
+        $this->saveOptions('location', $data['location']);
         $data['practice'] = implode(', ', $data['practice']);
         $data['industry'] = implode(', ', $data['industry']);
-        unset($data['practice_custom'], $data['industry_custom']);
+        unset($data['practice_custom'], $data['industry_custom'], $data['location_custom']);
         $data['location'] = implode(', ', $data['location']);
         $data['experience_points'] = null;
 
@@ -169,9 +176,10 @@ class AttorneyController extends Controller
 
     private function syncExistingAttorneyOptions(): void
     {
-        Attorney::select(['practice', 'industry'])->each(function (Attorney $attorney) {
+        Attorney::select(['practice', 'industry', 'location'])->each(function (Attorney $attorney) {
             $this->saveOptions('practice', preg_split('/\\s*,\\s*/', $attorney->practice));
             $this->saveOptions('industry', preg_split('/\\s*,\\s*/', $attorney->industry));
+            $this->saveOptions('location', preg_split('/\\s*,\\s*/', $attorney->location));
         });
     }
 }

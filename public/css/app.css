@@ -2953,3 +2953,32 @@ body:has(.navbar) p {
 body:has(.navbar) p * {
     font-size: 16px !important;
 }
+
+/* Attorney option actions must remain visible when this stylesheet is cached. */
+.at-checks label > a[href="#"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    border: 1px solid #b88d43;
+    border-radius: 4px;
+    background: #fff;
+    color: #8b641f;
+    font: 700 12px Arial;
+    text-decoration: none;
+}
+
+.at-checks label > a[href="#"]:last-child {
+    border-color: #a1281e;
+    background: #a1281e;
+    color: #fff;
+}
+
+.at-checks label > a[href="#"]:hover {
+    background: #b88d43;
+    color: #fff;
+}
+
+.at-checks label > a[href="#"]:last-child:hover {
+    background: #7f1d17;
+}
