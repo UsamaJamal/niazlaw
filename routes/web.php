@@ -35,6 +35,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Controllers\Admin\AttorneyTitleController;
+use App\Http\Controllers\Admin\AttorneyTaxonomyController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
@@ -95,6 +96,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/attorney-titles', [AttorneyTitleController::class, 'index'])->name('attorney-titles.index');
         Route::post('/attorney-titles', [AttorneyTitleController::class, 'store'])->name('attorney-titles.store');
         Route::delete('/attorney-titles/{title}', [AttorneyTitleController::class, 'destroy'])->name('attorney-titles.destroy');
+        Route::get('/attorney-options', [AttorneyTaxonomyController::class, 'index'])->name('attorney-options.index');
+        Route::post('/attorney-options', [AttorneyTaxonomyController::class, 'store'])->name('attorney-options.store');
+        Route::put('/attorney-options/{taxonomy}', [AttorneyTaxonomyController::class, 'update'])->name('attorney-options.update');
+        Route::delete('/attorney-options/{taxonomy}', [AttorneyTaxonomyController::class, 'destroy'])->name('attorney-options.destroy');
         Route::get('/attorney-page', [AttorneyController::class, 'details'])->name('attorneys.details');
         Route::post('/attorneys', [AttorneyController::class, 'store'])->name('attorneys.store');
         Route::get('/attorneys/{attorney}/edit', [AttorneyController::class, 'edit'])->name('attorneys.edit');

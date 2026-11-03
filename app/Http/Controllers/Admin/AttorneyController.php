@@ -15,7 +15,7 @@ class AttorneyController extends Controller
 {
     public function create()
     {
-        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name')]);
+        return view('admin.attorneys.create', ['attorneys' => Attorney::latest()->get(), 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
     }
 
     public function details()
@@ -71,7 +71,7 @@ class AttorneyController extends Controller
 
     public function edit(Attorney $attorney)
     {
-        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name')]);
+        return view('admin.attorneys.edit', ['attorney' => $attorney, 'capabilities' => Capability::orderBy('title')->get(), 'titles' => AttorneyTaxonomy::where('type', 'title')->orderBy('name')->pluck('name'), 'practiceOptions' => $this->options('practice'), 'industryOptions' => $this->options('industry'), 'practiceOptionIds' => AttorneyTaxonomy::where('type', 'practice')->pluck('id', 'name'), 'industryOptionIds' => AttorneyTaxonomy::where('type', 'industry')->pluck('id', 'name')]);
     }
 
     public function update(Request $request, Attorney $attorney)
@@ -146,5 +146,14 @@ class AttorneyController extends Controller
         $attorney->delete();
 
         return redirect()->route('admin.attorneys.create')->with('success', 'Attorney deleted successfully.');
+    }
+
+    private function options(string $type)
+    {
+        $defaults = [
+            'practice' => ['Commercial Transactions','Infrastructure & Projects','Procurement & Contracting','Aviation','Commercial Risk','International Business','Corporate Transactions & Governance','Commercial Operations & Strategic Sourcing','Infrastructure & Construction','Aviation & Transportation','Real Estate Transactions'],
+            'industry' => ['Aviation','Energy & Infrastructure','Technology','Healthcare & Life Sciences','Real Estate & Construction'],
+        ];
+        return AttorneyTaxonomy::where('type', $type)->orderBy('name')->pluck('name')->all();
     }
 }

@@ -87,7 +87,8 @@
             color: #fff;
             font: 700 26px / 1.1 Georgia, serif;
         }
-        .attorney-profile__meta h3 {
+        .attorney-profile__title {
+            display: block;
             margin: 0 0 7px;
             color: #fff;
             font: 550 18px / 1.1 Georgia, serif;
@@ -328,7 +329,7 @@
             .attorney-profile img { width: 240px; height: 200px; border: 2px solid rgba(255, 255, 255, .55); border-radius: 12px; }
             .attorney-profile__meta { padding-top: 0; min-width: 0; color: #fff; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
             .attorney-profile__name { margin-bottom: 12px; font-size: 28px; }
-            .attorney-profile__meta h3 { color: #fff; font-size: 19px; line-height: 21px; margin-bottom: 10px; font-weight:500; font-family: Georgia, serif; text-align: center; }
+            .attorney-profile__title { color: #fff; font-size: 19px; line-height: 21px; margin-bottom: 10px; font-weight:500; font-family: Georgia, serif; text-align: center; }
             .attorney-profile__meta p { color: #fff; font-size: 14px; line-height: 20px; margin-bottom: 0; justify-content: center; }
             .attorney-profile__meta .email { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
             .attorney-meta-row { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 100%; box-sizing: border-box; }
@@ -378,7 +379,7 @@
                     @if($attorney->designation)
                         <p class="attorney-profile__designation">{{ $attorney->designation }}</p>
                     @endif
-                    <h3>{{ $attorney->title }}</h3>
+                    <span class="attorney-profile__title">{{ $attorney->title }}</span>
                     @if($attorney->email)
                         <p class="email">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>

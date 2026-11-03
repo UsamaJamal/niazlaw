@@ -2309,6 +2309,26 @@ textarea {
    Attorney Detail Page Styles
    ========================================================================== */
 
+/* Inline Practice and Industry option controls in the admin attorney form. */
+.at-checks label a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 27px;
+    padding: 4px 8px;
+    border: 1px solid #a57b35;
+    border-radius: 3px;
+    background: #fff;
+    color: #8b682e !important;
+    font: 700 11px Arial, sans-serif;
+    text-decoration: none;
+}
+.at-checks label a:last-child {
+    border-color: #a1281e;
+    background: #a1281e;
+    color: #fff !important;
+}
+
 .attorney-detail-hero {
     position: relative;
     color: #fff;
