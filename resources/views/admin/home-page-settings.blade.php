@@ -16,7 +16,7 @@
     <p class="settings-nav-label">WEBSITE MANAGEMENT</p>
     <nav class="settings-nav">
         <a class="active" href="{{ route('admin.home-settings.edit') }}"><x-admin-icon name="home"/>Home Page Setting</a>
-        <a href="{{ route('admin.attorneys.create') }}"><x-admin-icon name="user"/>Add Attorney</a><a href="{{ route('admin.attorneys.details') }}"><x-admin-icon name="users"/>Attorney Detail Page</a>
+        <a href="{{ route('admin.attorneys.create') }}"><x-admin-icon name="user"/>Add Attorney</a><a href="{{ route('admin.attorney-titles.index') }}"><x-admin-icon name="edit"/>Titles</a><a href="{{ route('admin.attorneys.details') }}"><x-admin-icon name="users"/>Attorney Detail Page</a>
         <a href="{{ route('admin.capabilities.index') }}"><x-admin-icon name="chart"/>Capabilities</a><a href="{{ route('admin.capabilities.pages') }}"><x-admin-icon name="file"/>Capability Pages</a><a href="{{ route('admin.contact-settings.edit') }}"><x-admin-icon name="mail"/>Contact Us</a><a href="{{ route('admin.footer-settings.edit') }}"><x-admin-icon name="external"/>Footer Settings</a><a href="{{ route('admin.seo-settings.edit') }}"><x-admin-icon name="edit"/>SEO Settings</a>
         <p style="margin:22px 12px 8px;color:#c9bd9f;font:700 9px Arial;letter-spacing:.24em">INSIGHTS &amp; RESOURCES</p><div style="margin-left:8px"><a href="{{ route('admin.blog.index') }}"><x-admin-icon name="edit"/>Blog</a><a href="{{ url('/admin/blog?type=case_study') }}"><x-admin-icon name="file"/>Case Study</a><a href="{{ url('/admin/blog?type=insight') }}"><x-admin-icon name="bulb"/>Insight</a></div>
     </nav>
