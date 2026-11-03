@@ -48,6 +48,8 @@ class AttorneyController extends Controller
 
         if (!empty($data['practice_custom'])) $data['practice'][] = $data['practice_custom'];
         if (!empty($data['industry_custom'])) $data['industry'][] = $data['industry_custom'];
+        $this->saveOptions('practice', $data['practice']);
+        $this->saveOptions('industry', $data['industry']);
         $data['practice'] = implode(', ', $data['practice']);
         $data['industry'] = implode(', ', $data['industry']);
         unset($data['practice_custom'], $data['industry_custom']);
@@ -108,6 +110,8 @@ class AttorneyController extends Controller
 
         if (!empty($data['practice_custom'])) $data['practice'][] = $data['practice_custom'];
         if (!empty($data['industry_custom'])) $data['industry'][] = $data['industry_custom'];
+        $this->saveOptions('practice', $data['practice']);
+        $this->saveOptions('industry', $data['industry']);
         $data['practice'] = implode(', ', $data['practice']);
         $data['industry'] = implode(', ', $data['industry']);
         unset($data['practice_custom'], $data['industry_custom']);
@@ -150,10 +154,13 @@ class AttorneyController extends Controller
 
     private function options(string $type)
     {
-        $defaults = [
-            'practice' => ['Commercial Transactions','Infrastructure & Projects','Procurement & Contracting','Aviation','Commercial Risk','International Business','Corporate Transactions & Governance','Commercial Operations & Strategic Sourcing','Infrastructure & Construction','Aviation & Transportation','Real Estate Transactions'],
-            'industry' => ['Aviation','Energy & Infrastructure','Technology','Healthcare & Life Sciences','Real Estate & Construction'],
-        ];
         return AttorneyTaxonomy::where('type', $type)->orderBy('name')->pluck('name')->all();
+    }
+
+    private function saveOptions(string $type, array $names): void
+    {
+        foreach (array_unique(array_filter(array_map('trim', $names))) as $name) {
+            AttorneyTaxonomy::firstOrCreate(['type' => $type, 'name' => $name]);
+        }
     }
 }
