@@ -8,7 +8,7 @@
     <meta name="description" content="{{ $attorney->meta_description ?: ('Learn about ' . $attorney->name . ', ' . ($attorney->title ?? 'Attorney') . ' at Niaz Law P.C.') }}">
     <meta name="keywords" content="{{ $attorney->meta_keywords ?: ($attorney->name . ', attorney Illinois, lawyer Illinois, Niaz Law attorney, ' . ($attorney->title ?? 'legal counsel') . ', Illinois law firm') }}">
     <meta name="robots" content="{{ $attorney->robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         /* Attorney detail page: matches the supplied Figma/PDF composition. */
         .attorney-hero {

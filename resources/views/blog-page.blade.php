@@ -9,7 +9,7 @@
     <meta name="description" content="{{ $seo->meta_description ?: 'Read the latest legal articles and perspectives from Niaz Law P.C.' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?: 'legal blog, law articles Illinois, legal insights, Niaz Law articles' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .blog-page { background: #fff; }
         .blog-hero { min-height: 490px; padding: 142px 0 70px; display: flex; align-items: center; color: #fff; background: linear-gradient(90deg, rgba(0,0,0,.63), rgba(0,0,0,.34)), url('{{ asset('images/Blog-Page-new.webp') }}') center / cover; }

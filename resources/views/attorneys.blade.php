@@ -9,7 +9,7 @@
         <meta name="description" content="{{ $seo->meta_description ?: 'Meet the experienced attorneys at Niaz Law P.C.' }}">
         <meta name="keywords" content="{{ $seo->meta_keywords ?: 'attorneys Illinois, lawyers Illinois, legal team, Niaz Law attorneys' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     </head>
     <body class="antialiased" style="display: flex; flex-direction: column; min-height: 100vh;">
         @include('components.header')

@@ -9,7 +9,7 @@
     <meta name="description" content="{{ $seo->meta_description ?: 'Explore real-world case studies from Niaz Law P.C. showcasing our legal expertise.' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?: 'legal case studies, law firm success stories, Illinois legal cases, Niaz Law cases' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .case-studies-page { background: #fff; }
         .case-studies-hero { min-height: 490px; padding: 130px 0 66px; color: #fff; background: linear-gradient(90deg, rgba(0, 0, 0, .62), rgba(0, 0, 0, .38)), url('{{ asset('images/Case-Study-new.webp') }}') center / cover; display: flex; align-items: center; justify-content: center; }

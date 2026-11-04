@@ -9,7 +9,7 @@
     <meta name="description" content="{{ $seo->meta_description ?: 'Explore the legal capabilities of Niaz Law P.C., covering commercial transactions and business law.' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?: 'legal capabilities, law firm services Illinois, commercial transactions, Niaz Law' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         /* Capabilities Hero */
         .capabilities-hero {

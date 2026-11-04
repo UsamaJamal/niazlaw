@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Niaz Law P.C.</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         :root { --admin-black:#111311; --admin-paper:#f8f6f1; --admin-gold:#b89a61; --admin-line:#e6e1d8; --admin-muted:#777771; }
         .admin-dashboard { min-height:100vh; background:var(--admin-paper); color:#20211f; }

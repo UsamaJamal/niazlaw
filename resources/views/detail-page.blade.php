@@ -9,7 +9,7 @@
     <meta name="keywords" content="{{ $capability->meta_keywords ?: '' }}">
     <meta name="robots" content="{{ $capability->robots ?: 'index, follow' }}">page_description ?? $capability->description), 160) : 'Expert legal insights and resources from Niaz Law P.C., a leading Illinois law firm.' }}">
     <meta name="keywords" content="{{ isset($capability) ? ($capability->title.', legal services Illinois, '.Str::slug($capability->title, ' ').', Niaz Law') : 'legal resources, law firm Illinois, Niaz Law P.C.' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .detail-page { background: #fff; }
         .detail-page .navbar { background: #000; }

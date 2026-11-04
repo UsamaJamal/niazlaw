@@ -8,7 +8,7 @@
     <meta name="keywords" content="{{ $blog->meta_keywords ?: ($blog->category ? $blog->category.', ' : '') . 'legal insights, Niaz Law, Illinois law firm' }}">
     <meta name="robots" content="{{ $blog->robots ?? 'index, follow' }}">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-icon.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .post-hero { min-height: 470px; padding: 40px 0 0; display: flex; align-items: flex-end; color: #111; background: linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.05)), url('{{ $blog->featured_image_url }}') center/cover; }
         .post-hero__card { max-width: 760px; margin: 0 0 -85px 0; padding: 30px 38px; background: #f8f5ed; box-shadow: 0 2px 8px rgba(0,0,0,.18); }

@@ -9,7 +9,7 @@
     <meta name="description" content="{{ $seo->meta_description ?: 'Access the latest legal insights, news, and reports from Niaz Law P.C.' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?: 'legal insights, law firm news, Illinois legal news, Niaz Law insights' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .insights-page { background: #fff; }
         .insights-hero { min-height: 490px; padding: 76px 0; display: flex; align-items: center; color: #fff; background: linear-gradient(90deg, rgba(0,0,0,.65), rgba(0,0,0,.32)), url('{{ asset('images/Insights-Page-new.webp') }}') center / cover; }

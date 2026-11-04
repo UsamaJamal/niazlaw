@@ -9,7 +9,7 @@
         <meta name="description" content="{{ $seo->meta_description ?: 'Niaz Law P.C. provides expert legal counsel and dedicated representation for business and personal legal matters in Illinois.' }}">
         <meta name="keywords" content="{{ $seo->meta_keywords ?: 'law firm Illinois, legal counsel, attorney Illinois, business law, Niaz Law' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
         <style>
             /* Insights Section Styles */
             .insight-card {

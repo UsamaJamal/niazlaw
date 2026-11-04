@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <title>SEO Settings - Niaz Law P.C.</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         *{box-sizing:border-box}
         .seo-shell{min-height:100vh;display:grid;grid-template-columns:250px 1fr;background:#f6f4ef}

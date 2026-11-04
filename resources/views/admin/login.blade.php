@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Niaz Law P.C.</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .admin-login { min-height: 100vh; display: grid; grid-template-columns: 1.08fr .92fr; background: #f7f4ed; }
         .admin-login__visual { position: relative; overflow: hidden; padding: 58px 72px; color: #fff; background: linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.25)), url('{{ asset('images/home-hero.png') }}') center / cover; }

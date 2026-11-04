@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Attorney Options</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>body{margin:0;background:#f6f4ef;font-family:Arial}.wrap{max-width:1100px;margin:45px auto;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{padding:24px;background:#fff;border:1px solid #ded8cd}.add{display:flex;gap:8px;margin-bottom:16px}.add input,.option-row input{min-width:0;flex:1;padding:11px;border:1px solid #cfc9be;font-size:14px}.option-row{display:flex;gap:8px;align-items:center;padding:9px 0;border-top:1px solid #eee}.option-row form{display:flex;gap:8px;flex:1;margin:0}.btn{padding:11px 13px;border:0;border-radius:3px;background:#171717;color:#fff;font-weight:700;cursor:pointer}.edit{background:#a57b35}.delete{background:#a1281e}.success{padding:12px;background:#efe5cd}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.grid{grid-template-columns:1fr}.option-row{align-items:stretch;flex-wrap:wrap}.option-row form{width:100%}}</style>
 </head>
 <body>

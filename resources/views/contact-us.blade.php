@@ -9,7 +9,7 @@
     <meta name="description" content="{{ $seo->meta_description ?: 'Contact Niaz Law P.C. to schedule a legal consultation in Illinois.' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?: 'contact law firm, legal consultation Illinois, Niaz Law contact' }}">
         <meta name="robots" content="{{ $seo->meta_robots ?: 'index, follow' }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <style>
         .contact-page { background: #fff; }
         .contact-hero { min-height: 490px; padding: 142px 0 70px; display: flex; align-items: center; color: #fff; background: linear-gradient(90deg, rgba(0,0,0,.64), rgba(0,0,0,.34)), url('{{ asset('images/Contact-Us-new.webp') }}') center / cover; }

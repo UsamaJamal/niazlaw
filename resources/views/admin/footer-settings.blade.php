@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Footer Settings</title><link rel="stylesheet" href="{{ asset('css/app.css') }}"><style>
+<!doctype html><html><head><meta charset="utf-8"><title>Footer Settings</title><link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}"><style>
 body{margin:0;background:#f6f4ef;font-family:Arial}
 .fs-shell{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
 .fs-side{width:250px;box-sizing:border-box;padding:25px 14px;background:linear-gradient(160deg,#15191a,#050606);color:#fff}
