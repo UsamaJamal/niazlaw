@@ -35,7 +35,16 @@
             <nav class="admin-nav">
                 <a class="active" href="{{ route('admin.home-settings.edit') }}"><x-admin-icon name="home" class="admin-nav__icon"/>Home Page Setting</a>
                 <a href="{{ route('admin.attorneys.create') }}"><x-admin-icon name="user" class="admin-nav__icon"/>Add Attorney</a><a href="{{ route('admin.attorneys.details') }}"><x-admin-icon name="users" class="admin-nav__icon"/>Attorney Detail Page</a><a href="{{ route('admin.capabilities.index') }}"><x-admin-icon name="chart" class="admin-nav__icon"/>Capabilities</a><a href="{{ route('admin.capabilities.pages') }}"><x-admin-icon name="file"/>Capability Pages</a><a href="{{ route('admin.contact-settings.edit') }}"><x-admin-icon name="mail" class="admin-nav__icon"/>Contact Us</a><a href="{{ route('admin.footer-settings.edit') }}">Footer Settings</a><a href="{{ route('admin.seo-settings.edit') }}"><x-admin-icon name="edit"/>SEO Settings</a><p style="margin:22px 12px 8px;color:#c9bd9f;font:700 9px Arial;letter-spacing:.24em">INSIGHTS &amp; RESOURCES</p><div style="margin-left:8px"><a href="{{ route('admin.blog.index') }}"><x-admin-icon name="edit"/>Blog</a><a href="{{ url('/admin/blog?type=case_study') }}"><x-admin-icon name="file"/>Case Study</a><a href="{{ url('/admin/blog?type=insight') }}"><x-admin-icon name="bulb"/>Insight</a></div>
-                <a href="{{ route('admin.careers.edit') }}"><x-admin-icon name="users" class="admin-nav__icon"/>Career Management</a>
+                <details style="margin:2px 0;">
+                    <summary style="display:flex;align-items:center;justify-content:space-between;padding:0 12px;min-height:44px;color:#f0efe9;font-size:14px;cursor:pointer;list-style:none;border-radius:5px;">
+                        <span style="display:flex;align-items:center;gap:14px;"><x-admin-icon name="users" class="admin-nav__icon"/>Career Management</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                    </summary>
+                    <div style="margin:4px 0 6px 36px;padding-left:10px;border-left:1px solid rgba(184,154,97,.4);display:flex;flex-direction:column;gap:4px;">
+                        <a href="{{ route('admin.careers.edit', ['track' => 'attorneys']) }}" style="padding:6px 8px;font-size:13px;color:#dfdad1;">Attorneys</a>
+                        <a href="{{ route('admin.careers.edit', ['track' => 'professional-staff']) }}" style="padding:6px 8px;font-size:13px;color:#dfdad1;">Professional Staff</a>
+                    </div>
+                </details>
             </nav>
             <div class="admin-side-footer"><a href="/" target="_blank"><x-admin-icon name="external"/>View website</a><form method="post" action="{{ route('admin.logout') }}">@csrf<button type="submit"><x-admin-icon name="logout"/>Sign out</button></form></div>
         </aside>

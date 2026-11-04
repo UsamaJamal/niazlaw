@@ -5,7 +5,7 @@
                 <img src="{{ asset('images/header-logo.png') }}" alt="Niaz Law P.C." style="max-height: 50px; width: auto;">
             </a>
         </div>
-        <div style="display: flex; align-items: center; gap: 32px;">
+        <div style="display: flex; align-items: center; gap: clamp(14px, 2vw, 32px);">
             <nav class="nav-links">
                 <a href="/attorneys">Attorneys</a>
                 <a href="/capabilities">Capabilities</a>
@@ -19,7 +19,7 @@
                 </div>
                 <a href="/about">About</a>
                 <a href="/contact-us">Contact</a>
-                <div class="career-menu"><a href="{{ route('careers') }}" class="career-menu__trigger">Career</a><div class="career-menu__cards"><a class="career-menu__card" href="{{ route('careers.track', 'attorneys') }}"><img src="{{ asset('images/discus-business-needs.jpg') }}" alt="Attorney meeting with clients"><span>Attorneys <b>→</b></span></a><a class="career-menu__card" href="{{ route('careers.track', 'professional-staff') }}"><img src="{{ asset('images/professsional-services.jpg') }}" alt="Professional staff collaborating"><span>Professional Staff <b>→</b></span></a></div></div>
+                <div class="career-menu"><a href="javascript:void(0)" class="career-menu__trigger" onclick="event.preventDefault();" role="button" aria-haspopup="true">Career</a><div class="career-menu__cards"><a class="career-menu__card" href="{{ route('careers.track', 'attorneys') }}"><img src="{{ asset('images/discus-business-needs.jpg') }}" alt="Attorney meeting with clients"><span>Attorneys <b>→</b></span></a><a class="career-menu__card" href="{{ route('careers.track', 'professional-staff') }}"><img src="{{ asset('images/professsional-services.jpg') }}" alt="Professional staff collaborating"><span>Professional Staff <b>→</b></span></a></div></div>
             </nav>
             <div class="nav-actions" style="display: flex; align-items: center; gap: 16px;">
                 <div class="header-search-wrapper" id="header-search-wrapper">
@@ -57,7 +57,14 @@
                     <a href="{{ route('capabilities.show', ['capability' => $cap->slug ?: $cap->id]) }}">{{ $cap->title }}</a>
                 @endforeach
             </div>
-            <a href="{{ route('careers') }}">Career</a>
+                        <button type="button" class="mobile-menu__dropdown-toggle" aria-expanded="false">
+                Career
+                <svg class="mobile-menu__chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="mobile-menu__sub-links" aria-hidden="true">
+                <a href="{{ route('careers.track', 'attorneys') }}">Attorneys</a>
+                <a href="{{ route('careers.track', 'professional-staff') }}">Professional Staff</a>
+            </div>
             <button type="button" class="mobile-menu__dropdown-toggle" aria-expanded="false">
                 Insights &amp; Resources
                 <svg class="mobile-menu__chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
@@ -291,6 +298,20 @@
                 searchInput.value = '';
             }
         });
+
+        const careerMenu = document.querySelector('.career-menu');
+        if (careerMenu) {
+            let careerTimeout;
+            careerMenu.addEventListener('mouseenter', () => {
+                clearTimeout(careerTimeout);
+                careerMenu.classList.add('is-open');
+            });
+            careerMenu.addEventListener('mouseleave', () => {
+                careerTimeout = setTimeout(() => {
+                    careerMenu.classList.remove('is-open');
+                }, 300);
+            });
+        }
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;

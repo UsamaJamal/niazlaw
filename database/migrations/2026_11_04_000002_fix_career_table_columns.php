@@ -7,27 +7,29 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::table('career_settings', function (Blueprint $table) {
-            $table->text('attorney_overview')->nullable();
-            $table->text('attorney_advancement')->nullable();
-            $table->text('staff_overview')->nullable();
-            $table->text('staff_advancement')->nullable();
-            $table->string('application_email')->nullable();
-            $table->timestamps();
-        });
+        if (Schema::hasTable('career_settings')) {
+            Schema::table('career_settings', function (Blueprint $table) {
+                if (!Schema::hasColumn('career_settings', 'attorney_overview')) $table->longText('attorney_overview')->nullable();
+                if (!Schema::hasColumn('career_settings', 'attorney_advancement')) $table->longText('attorney_advancement')->nullable();
+                if (!Schema::hasColumn('career_settings', 'staff_overview')) $table->longText('staff_overview')->nullable();
+                if (!Schema::hasColumn('career_settings', 'staff_advancement')) $table->longText('staff_advancement')->nullable();
+                if (!Schema::hasColumn('career_settings', 'application_email')) $table->string('application_email')->nullable();
+                if (!Schema::hasColumn('career_settings', 'created_at')) $table->timestamps();
+            });
+        }
 
-        Schema::table('career_openings', function (Blueprint $table) {
-            $table->string('track')->nullable();
-            $table->string('title')->nullable();
-            $table->string('location')->nullable();
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
+        if (Schema::hasTable('career_openings')) {
+            Schema::table('career_openings', function (Blueprint $table) {
+                if (!Schema::hasColumn('career_openings', 'track')) $table->string('track')->nullable();
+                if (!Schema::hasColumn('career_openings', 'title')) $table->string('title')->nullable();
+                if (!Schema::hasColumn('career_openings', 'location')) $table->string('location')->nullable();
+                if (!Schema::hasColumn('career_openings', 'active')) $table->boolean('active')->default(true);
+                if (!Schema::hasColumn('career_openings', 'created_at')) $table->timestamps();
+            });
+        }
     }
 
     public function down()
     {
-        Schema::table('career_settings', function (Blueprint $table) { $table->dropColumn(['attorney_overview','attorney_advancement','staff_overview','staff_advancement','application_email','created_at','updated_at']); });
-        Schema::table('career_openings', function (Blueprint $table) { $table->dropColumn(['track','title','location','active','created_at','updated_at']); });
     }
 };

@@ -40,7 +40,16 @@
 <a href="{{ url('/admin/blog?type=insight') }}">
 <x-admin-icon name="bulb"/>Insight</a>
 </div>
-<a href="{{ route('admin.careers.edit') }}"><x-admin-icon name="users"/>Career Management</a></nav>
+<details style="margin:2px 0;">
+    <summary style="display:flex;align-items:center;justify-content:space-between;padding:12px;color:#f6f4ef;font:14px Georgia;cursor:pointer;list-style:none;">
+        <span style="display:flex;align-items:center;gap:13px;"><x-admin-icon name="users"/>Career Management</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+    </summary>
+    <div style="margin:4px 0 6px 36px;padding-left:10px;border-left:1px solid rgba(194,156,83,.4);display:flex;flex-direction:column;gap:4px;">
+        <a href="{{ route('admin.careers.edit', ['track' => 'attorneys']) }}" style="padding:6px 8px;font-size:13px;color:#dfdad1;">Attorneys</a>
+        <a href="{{ route('admin.careers.edit', ['track' => 'professional-staff']) }}" style="padding:6px 8px;font-size:13px;color:#dfdad1;">Professional Staff</a>
+    </div>
+</details></nav>
 </aside>
 <main class="main">
 <div class="wrap">
