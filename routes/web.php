@@ -151,3 +151,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });
+
+
+Route::get('/run-migration-now', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'CareerSeeder', '--force' => true]);
+    $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+    return '<pre>=== MIGRATE ===' . "\n" . $migrateOutput . "\n" . '=== SEED ===' . "\n" . $seedOutput . "\nDone!</pre>";
+});

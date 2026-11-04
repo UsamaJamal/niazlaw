@@ -19,7 +19,7 @@
                 </div>
                 <a href="/about">About</a>
                 <a href="/contact-us">Contact</a>
-                <div class="career-menu"><button class="career-menu__trigger" type="button" aria-label="View career options">Career</button><div class="career-menu__cards"><a class="career-menu__card" href="{{ route('careers.track', 'attorneys') }}"><img src="{{ asset('images/discus-business-needs.jpg') }}" alt="Attorney meeting with clients"><span>Attorneys <b>→</b></span></a><a class="career-menu__card" href="{{ route('careers.track', 'professional-staff') }}"><img src="{{ asset('images/professsional-services.jpg') }}" alt="Professional staff collaborating"><span>Professional Staff <b>→</b></span></a></div></div>
+                <div class="career-menu"><button class="career-menu__trigger" type="button" aria-label="View career options" style="padding:0;border:0;background:transparent;color:#fff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;line-height:100%;text-transform:uppercase;cursor:pointer;">Career</button><div class="career-menu__cards"><a class="career-menu__card" href="{{ route('careers.track', 'attorneys') }}"><img src="{{ asset('images/discus-business-needs.jpg') }}" alt="Attorney meeting with clients"><span>Attorneys <b>→</b></span></a><a class="career-menu__card" href="{{ route('careers.track', 'professional-staff') }}"><img src="{{ asset('images/professsional-services.jpg') }}" alt="Professional staff collaborating"><span>Professional Staff <b>→</b></span></a></div></div>
             </nav>
             <div class="nav-actions" style="display: flex; align-items: center; gap: 16px;">
                 <div class="header-search-wrapper" id="header-search-wrapper">
