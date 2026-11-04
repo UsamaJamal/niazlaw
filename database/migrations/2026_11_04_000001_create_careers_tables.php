@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up(){Schema::create('career_settings',fn(Blueprint $t)=>$t->id()->string('attorney_overview')->nullable()->text('attorney_advancement')->nullable()->text('staff_overview')->nullable()->text('staff_advancement')->nullable()->text('application_email')->nullable()->timestamps());Schema::create('career_openings',fn(Blueprint $t)=>$t->id()->string('track')->string('title')->string('location')->boolean('active')->default(true)->timestamps());} public function down(){Schema::dropIfExists('career_openings');Schema::dropIfExists('career_settings');} };

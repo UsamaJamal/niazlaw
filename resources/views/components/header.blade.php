@@ -19,6 +19,7 @@
                 </div>
                 <a href="/about">About</a>
                 <a href="/contact-us">Contact</a>
+                <div class="career-menu"><button class="career-menu__trigger" type="button" aria-label="View career options">Career</button><div class="career-menu__cards"><a class="career-menu__card" href="{{ route('careers.track', 'attorneys') }}"><img src="{{ asset('images/discus-business-needs.jpg') }}" alt="Attorney meeting with clients"><span>Attorneys <b>→</b></span></a><a class="career-menu__card" href="{{ route('careers.track', 'professional-staff') }}"><img src="{{ asset('images/professsional-services.jpg') }}" alt="Professional staff collaborating"><span>Professional Staff <b>→</b></span></a></div></div>
             </nav>
             <div class="nav-actions" style="display: flex; align-items: center; gap: 16px;">
                 <div class="header-search-wrapper" id="header-search-wrapper">
@@ -56,6 +57,7 @@
                     <a href="{{ route('capabilities.show', ['capability' => $cap->slug ?: $cap->id]) }}">{{ $cap->title }}</a>
                 @endforeach
             </div>
+            <a href="{{ route('careers') }}">Career</a>
             <button type="button" class="mobile-menu__dropdown-toggle" aria-expanded="false">
                 Insights &amp; Resources
                 <svg class="mobile-menu__chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>

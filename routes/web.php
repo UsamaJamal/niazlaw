@@ -23,6 +23,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AttorneysController;
 use App\Http\Controllers\AttorneyDetailController;
+use App\Http\Controllers\CareerController;
+use App\Http\Controllers\Admin\CareerController as AdminCareerController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Admin\HomePageSettingController;
 use App\Http\Controllers\Admin\ContactSettingController;
@@ -40,6 +42,32 @@ use App\Http\Controllers\Admin\AttorneyTaxonomyController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/attorneys', [AttorneysController::class, 'index'])->name('attorneys');
+Route::view('/careers', 'careers')->name('careers');
+/*Route::get('/careers/{track}', function (string $track) {
+    abort_unless(in_array($track, ['attorneys', 'professional-staff'], true), 404);
+
+    $career = $track === 'attorneys'
+        ? [
+            'title' => 'Careers: Attorneys',
+            'image' => 'discus-business-needs.jpg',
+            'image_alt' => 'Attorney meeting with clients',
+            'overview' => 'Joining a new firm is a meaningful decision at every stage of your career. At Niaz Law P.C., attorneys take on sophisticated work, build trusted client relationships and receive the support to grow their practice.',
+            'advancement' => 'We value initiative, sound judgment and a client-first approach. Our attorneys work closely with experienced counsel, gain direct responsibility and are encouraged to develop a practice that reflects their strengths.',
+            'openings' => ['Associate Attorney — Franklin Park, IL', 'Of Counsel — Illinois'],
+        ]
+        : [
+            'title' => 'Careers: Professional Staff',
+            'image' => 'professsional-services.jpg',
+            'image_alt' => 'Professional staff collaborating',
+            'overview' => 'Our professional staff is central to every client experience. We welcome organised, thoughtful people who enjoy collaborating, solving problems and helping a growing legal team do its best work.',
+            'advancement' => 'We offer meaningful responsibility, practical learning and a supportive team environment. Every role has room to build skills and create a real impact for clients and colleagues.',
+            'openings' => ['Legal Assistant — Franklin Park, IL', 'Client Services Coordinator — Lisle, IL'],
+        ];
+
+    return view('career-detail', compact('career', 'track'));
+})->name('careers.track');*/
+Route::get('/careers/{track}', [CareerController::class,'show'])->name('careers.track');
+Route::post('/careers/apply', [CareerController::class,'apply'])->name('careers.apply');
 Route::get('/attorneys/{attorney:slug}/contact.vcf', [AttorneyDetailController::class, 'vcard'])->name('attorneys.vcard');
 Route::get('/attorneys/{attorney:slug}/profile.pdf', [AttorneyDetailController::class, 'pdf'])->name('attorneys.pdf');
 Route::get('/attorneys/{attorney:slug}', [AttorneyDetailController::class, 'show'])->name('attorneys.detail');
@@ -83,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/home-page-settings/hero-slides', [HomePageSettingController::class, 'createSlide'])->name('home-settings.slides.create');
         Route::delete('/home-page-settings/hero-slides/{heroSlide}', [HomePageSettingController::class, 'destroySlide'])->name('home-settings.slides.destroy');
         Route::get('/contact-settings', [ContactSettingController::class, 'edit'])->name('contact-settings.edit');
+        Route::get('/careers', [AdminCareerController::class,'edit'])->name('careers.edit'); Route::put('/careers', [AdminCareerController::class,'update'])->name('careers.update'); Route::post('/careers/openings', [AdminCareerController::class,'store'])->name('careers.openings.store'); Route::get('/careers/openings/{opening}/edit', [AdminCareerController::class,'openingEdit'])->name('careers.openings.edit'); Route::put('/careers/openings/{opening}', [AdminCareerController::class,'openingUpdate'])->name('careers.openings.update'); Route::delete('/careers/openings/{opening}', [AdminCareerController::class,'destroy'])->name('careers.openings.destroy');
         Route::put('/contact-settings', [ContactSettingController::class, 'update'])->name('contact-settings.update');
         Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer-settings.edit');
         Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');

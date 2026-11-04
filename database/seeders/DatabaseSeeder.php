@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdditionalCapabilitySeeder::class);
          $this->call(BlogPostSeeder::class);
                  $this->call(StaticPageSeeder::class);
+        $this->call(CareerSeeder::class);
     }
 }

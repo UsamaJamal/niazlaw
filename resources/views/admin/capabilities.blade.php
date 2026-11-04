@@ -40,7 +40,7 @@
 <a href="{{ url('/admin/blog?type=insight') }}">
 <x-admin-icon name="bulb"/>Insight</a>
 </div>
-</nav>
+<a href="{{ route('admin.careers.edit') }}"><x-admin-icon name="users"/>Career Management</a></nav>
 </aside>
 <main class="cp">
 <div class="cp-wrap">

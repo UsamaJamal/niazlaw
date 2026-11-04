@@ -1,0 +1,1 @@
+<?php namespace App\Models; use Illuminate\Database\Eloquent\Model; class CareerOpening extends Model { protected $fillable=['track','title','location','description','active']; protected $casts=['active'=>'boolean']; }

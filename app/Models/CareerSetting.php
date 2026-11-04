@@ -1,0 +1,1 @@
+<?php namespace App\Models; use Illuminate\Database\Eloquent\Model; class CareerSetting extends Model { protected $fillable=['attorney_overview','attorney_advancement','staff_overview','staff_advancement','application_email']; }
